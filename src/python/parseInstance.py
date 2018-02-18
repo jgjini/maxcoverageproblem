@@ -51,13 +51,13 @@ class Parser:
                 if distance.euclidean(s,pt) <= 500 :
                     print(pt,s)
                     plt.plot([s[0],pt[0]], [s[1], pt[1]], color='b',linewidth=1)
-        plt.show()
+        #plt.show()
 
         #plt.plot([409408, 436075],(409541, 436090))
         #plt.plot([409408,409541],[436075,436090])
         #plt.plot(*zip(*points), marker='o', color='r', ls='')
         #plt.plot(*zip(*[nodesbynum[38], nodesbynum[52], nodesbynum[285], [143], nodesbynum[126]]), marker = 'o', color = 'g', ls='')
-        plt.show()
+        #plt.show()
 
         finalNodes = {}
         for p1 in points:

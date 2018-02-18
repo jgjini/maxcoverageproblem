@@ -11,6 +11,17 @@ class Coverage :
         coverage.append(current)
         return coverage
 
+    def get_coverage_matrix(self):
+        matrix =  [[0 for elem in self.nodes] for elem in self.nodes]
+        demand = [0 for elem in self.nodes]
+
+        for elem in self.coverage_dict:
+            demand[elem-1] = self.nodes[elem]["d"]
+            for n in self.coverage_dict[elem]["c"]:
+                matrix[elem-1][n-1] = 1
+        print(demand)
+        return matrix
+
     def get_covered_demand(self, nodes):
         return sum([self.nodes[node]["d"] for node in nodes])
 

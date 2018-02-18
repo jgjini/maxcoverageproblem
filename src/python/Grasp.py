@@ -91,7 +91,8 @@ class Grasp:
 
 
 
-g = Grasp("/data1", 500, 5, 1)
+g = Grasp("/data1", 150, 3, 4)
 
+print(g.solutions)
 print(g.bestSolution)
-print(g.parser.totalDemand)
+print(g.coverage.get_coverage_matrix())
