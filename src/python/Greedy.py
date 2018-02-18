@@ -1,13 +1,21 @@
 from src.python.DataStructure import Coverage, Solution
 from src.python.parseInstance import Parser
 from copy import deepcopy
-import matplotlib.pyplot as plt
-from scipy.spatial import distance
-
 import random
 
+"""
+Nodes = {"Jette" : {"d" : 21, "e" : {"Evere" : 7, "Forest" : 15}},
+         "Evere" : {"d": 30, "e" : {"Jette": 7, "St-Gille" : 12, "Ixelles" : 14 }},
+         "St-Gille" : {"d": 11, "e" : {"Evere" : 12, "Ixelles" : 8, "Uccle" : 7, "Forest" : 11 }},
+         "Forest" : {"d": 7, "e" : {"St-Gille" : 11, "Uccle": 9, "Jette": 15}},
+         "Uccle" : {"d": 7, "e" : {"Forest" : 9, "Ixelles" : 5, "St-Gille" : 7}},
+         "Ixelles" : {"d": 24, "e" : {"Uccle": 5, "St-Gille" : 8, "Evere" : 14}}
+         }
 
-class Grasp:
+Nodes = Parser.get_Nodes()
+"""
+
+class Greedy:
 
     def __init__(self, data, maxDistance, MaxFacilityNumber, graspIterations):
         self.parser = Parser(data)
@@ -75,51 +83,16 @@ class Grasp:
 
         return sol.solution
 
-    def plot_solution(self):
-        s = []
-
-        for _ in self.bestSolution["solution"]:
-            cov = self.coverage.get_covered_nodes(_)
-            for n in cov :
-                if n not in s :
-                    s.append(n)
-
-
-        nodesbynum = self.parser.nodesbynum
-        nodesbypos = self.parser.nodesbypos
-        points = self.parser.points
-
-
-        for i in range(len(s)):
-            s[i] = nodesbynum[s[i]]
-
-        sol = [nodesbynum[i] for i in self.bestSolution["solution"]]
-
-        for point in points:
-            plt.plot(point[0], point[1], marker='o', color='r', ls='', markersize= 3)
-
-        for point in s:
-            plt.plot(point[0], point[1], marker='o', color='b', ls='',markersize= 3)
-
-        for point in sol:
-            plt.plot(point[0], point[1], marker='o', color='g', ls='',markersize= 6)
-
-        for s in sol:
-            for pt in s:
-                if distance.euclidean(s,pt) <= self.d :
-                    print(pt,s)
-                    plt.plot([s[0],pt[0]], [s[1], pt[1]], color='b',linewidth=1)
-
-        plt.show()
 
 
 
 
 
 
-g = Grasp("/data5", 500, 5, 2)
+
+
+g = Greedy("/data1", 150, 3, 4)
 
 print(g.solutions)
 print(g.bestSolution)
 print(g.coverage.get_coverage_matrix())
-g.plot_solution()
