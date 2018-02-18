@@ -21,6 +21,7 @@ class Grasp:
         self.solutions.append({"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)})
 
         counter = 0
+
         while counter < graspIterations :
             newSol = self.grasp_procedure(self.coverage)
             self.solutions.append({"solution" : newSol, "covered_demand" : self.coverage.get_solution_demand(newSol)})
