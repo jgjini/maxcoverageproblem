@@ -118,18 +118,41 @@ file4 = {1: [0.04534744326402381, 0.04534744326402381, 0.04534744326402381, 0.04
  24: [0.4524823281385639, 0.46389152990781696, 0.4504981191352156, 0.47141498904551277, 0.4678599479145137, 0.45587201851928405],
  25: [0.48104667024926623, 0.4809639948741267, 0.47310983423587283, 0.4655036997230375], 'file': 4}
 
+cplex1 = [1097,1763,2256,2723,3162,3541,3892,4233, 4548, 4847, 5129, 5393, 5652,5909, 6153, 6393, 6625, 6855, 7083, 7301, 7516,7716,7911,8099,8287]
+cplex2 = [1097,1921, 2587, 3237, 3758, 4257, 4750, 5232, 5671, 6050,6401, 6742, 7057, 7356, 7638, 7914, 8178, 8437, 8694, 8938, 9178, 9410, 9640, 9868, 10086]
+cplex3 = [1097, 1921, 2660, 3394, 4060, 4710,5239, 5721, 6150, 6529, 6877, 7219, 7557, 7876,8175, 8470, 8727, 8982, 9235, 9479, 9723, 9963, 10191,10418, 10631]
+cplex4 = [1097, 2163, 2987, 3721, 4387, 5037, 5566, 6059,6541, 6996, 7435, 7864,8243, 8594, 8935, 9273, 9592, 9907, 10206, 10505, 10787, 11051, 11310, 11567, 11820]
 
-for i in range(1,25):
-    for pt in file1[i]:
-        plt.plot(i, pt*100, marker='o', color='r', ls='', markersize=2)
-for i in range(1,25):
-    for pt in file2[i]:
-        plt.plot(i, pt*100, marker='o', color='b', ls='', markersize=2)
-for i in range(1,25):
-    for pt in file3[i]:
-        plt.plot(i, pt*100, marker='o', color='g', ls='', markersize=2)
-for i in range(1,25):
-    for pt in file4[i]:
-        plt.plot(i, pt*100, marker='o', color='y', ls='', markersize=2)
+def plot(a,b,c,d) :
+    if a :
+        for i in range(1,25):
+            for pt in file1[i]:
+                plt.plot(i, pt*100, marker='o', color='r', ls='', markersize=2)
+        for i in range(len(cplex1)):
+            plt.plot(i, (cplex1[i] / 12151)*100, marker='o', color='black', markersize=3)
 
-plt.show()
+    if b :
+        for i in range(1,25):
+            for pt in file2[i]:
+                plt.plot(i, pt*100, marker='o', color='b', ls='', markersize=2)
+        for i in range(len(cplex2)):
+            plt.plot(i, (cplex2[i] / 15983) * 100, marker='o', color='black', markersize=3)
+
+    if c :
+        for i in range(1,25):
+            for pt in file3[i]:
+                plt.plot(i, pt*100, marker='o', color='g', ls='', markersize=2)
+        for i in range(len(cplex3)):
+            plt.plot(i, (cplex3[i] / 19706) * 100, marker='o', color='black', markersize=3)
+
+    if d:
+        for i in range(1,25):
+            for pt in file4[i]:
+                plt.plot(i, pt*100, marker='o', color='y', ls='', markersize=2)
+        for i in range(len(cplex4)):
+            plt.plot(i, (cplex4[i] / 24191) * 100, marker='o', color='black', markersize=3)
+
+
+    plt.show()
+
+plot(1,0,0,0)
