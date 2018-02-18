@@ -20,7 +20,7 @@ class Grasp:
 
         sol = self.grasp_procedure(self.coverage)
         self.solutions.append({"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)})
-        statistics[0] += [self.coverage.get_solution_demand(sol) / self.parser.totalDemand]
+        statistics[MaxFacilityNumber] += [self.coverage.get_solution_demand(sol) / self.parser.totalDemand]
 
         counter = 0
         iter = 1
@@ -28,14 +28,13 @@ class Grasp:
             newSol = self.grasp_procedure(self.coverage)
             self.solutions.append({"solution" : newSol, "covered_demand" : self.coverage.get_solution_demand(newSol)})
 
-            statistics[iter] += [self.coverage.get_solution_demand(newSol) / self.parser.totalDemand]
+            statistics[MaxFacilityNumber] += [self.coverage.get_solution_demand(newSol) / self.parser.totalDemand]
 
             if self.coverage.get_solution_demand(newSol) > self.coverage.get_solution_demand(sol):
                 sol = newSol
             else :
                 counter += 1
 
-            iter += 1
         self.bestSolution = {"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)}
 
 
@@ -122,8 +121,8 @@ class Grasp:
 
 
 
-
-g = Grasp("/data1", 500, 6, 10)
+for i in range(10) :
+    g = Grasp("/data1", 500, i, 5)
 
 print(g.solutions)
 print(g.bestSolution)
