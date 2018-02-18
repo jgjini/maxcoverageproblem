@@ -6,11 +6,10 @@ from scipy.spatial import distance
 
 import random
 
-statistics = {i : [] for i in range(15)}
 
 class Grasp:
 
-    def __init__(self, data, maxDistance, MaxFacilityNumber, graspIterations):
+    def __init__(self, data, maxDistance, MaxFacilityNumber, graspIterations, statistics):
         self.parser = Parser(data)
         self.d = maxDistance
         self.k = MaxFacilityNumber
@@ -118,14 +117,14 @@ class Grasp:
         plt.show()
 
 
-
-
-
-for i in range(10) :
-    g = Grasp("/data1", 500, i, 5)
+"""
+for i in range(15,20):
+    g = Grasp("/data1", 250, i, 3)
+    g.plot_solution()
 
 print(g.solutions)
 print(g.bestSolution)
 print(g.coverage.get_coverage_matrix())
-#g.plot_solution()
+g.plot_solution()
 print(statistics)
+"""
