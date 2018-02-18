@@ -6,6 +6,7 @@ from scipy.spatial import distance
 
 import random
 
+statistics = {i : [] for i in range(15)}
 
 class Grasp:
 
@@ -19,18 +20,22 @@ class Grasp:
 
         sol = self.grasp_procedure(self.coverage)
         self.solutions.append({"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)})
+        statistics[0] += [self.coverage.get_solution_demand(sol) / self.parser.totalDemand]
 
         counter = 0
-
+        iter = 1
         while counter < graspIterations :
             newSol = self.grasp_procedure(self.coverage)
             self.solutions.append({"solution" : newSol, "covered_demand" : self.coverage.get_solution_demand(newSol)})
+
+            statistics[iter] += [self.coverage.get_solution_demand(newSol) / self.parser.totalDemand]
 
             if self.coverage.get_solution_demand(newSol) > self.coverage.get_solution_demand(sol):
                 sol = newSol
             else :
                 counter += 1
 
+            iter += 1
         self.bestSolution = {"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)}
 
 
@@ -118,9 +123,10 @@ class Grasp:
 
 
 
-g = Grasp("/data5", 500, 5, 2)
+g = Grasp("/data1", 500, 6, 10)
 
 print(g.solutions)
 print(g.bestSolution)
 print(g.coverage.get_coverage_matrix())
-g.plot_solution()
+#g.plot_solution()
+print(statistics)
