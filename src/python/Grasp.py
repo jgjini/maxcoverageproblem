@@ -1,7 +1,9 @@
-from DataStructure import Coverage, Solution
+from src.python.DataStructure import Coverage, Solution
+from src.python.parseInstance import Parser
 from copy import deepcopy
-from parseInstance import Parser
 import random
+
+"""
 Nodes = {"Jette" : {"d" : 21, "e" : {"Evere" : 7, "Forest" : 15}},
          "Evere" : {"d": 30, "e" : {"Jette": 7, "St-Gille" : 12, "Ixelles" : 14 }},
          "St-Gille" : {"d": 11, "e" : {"Evere" : 12, "Ixelles" : 8, "Uccle" : 7, "Forest" : 11 }},
@@ -11,38 +13,32 @@ Nodes = {"Jette" : {"d" : 21, "e" : {"Evere" : 7, "Forest" : 15}},
          }
 
 Nodes = Parser.get_Nodes()
+"""
+
 class Grasp:
-    def __init__(self, Nodes, d, k):
-        self.d = d
-        self.k = k
-        self.coverage = Coverage(Nodes,d)
-        print(self.coverage.coverage_dict)
-        n = [38, 52, 285, 143, 126]
-        s = set()
-        for _ in n :
-            cov = self.coverage.get_covered_nodes(_)
-            for c in cov :
-                s.add(c)
-        print(s)
+
+    def __init__(self, data, maxDistance, MaxFacilityNumber, graspIterations):
+        self.parser = Parser(data)
+        self.d = maxDistance
+        self.k = MaxFacilityNumber
+        self.coverage = Coverage(self.parser.Nodes, maxDistance)
+        self.solutions = []
+        self.bestSolution = []
+
         sol = self.grasp_procedure(self.coverage)
-        print(sol)
-        print(self.coverage.get_solution_demand(sol))
-        changed = True
+        self.solutions.append({"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)})
+
         counter = 0
-        while counter < 3 :
-            changed = False
+        while counter < graspIterations :
             newSol = self.grasp_procedure(self.coverage)
-            print(newSol)
-            print(self.coverage.get_solution_demand(newSol))
+            self.solutions.append({"solution" : newSol, "covered_demand" : self.coverage.get_solution_demand(newSol)})
+
             if self.coverage.get_solution_demand(newSol) > self.coverage.get_solution_demand(sol):
                 sol = newSol
-                changed = True
             else :
                 counter += 1
 
-
-        print(sol)
-        print("Covered Demand : ", self.coverage.get_solution_demand(sol))
+        self.bestSolution = {"solution" : sol, "covered_demand" : self.coverage.get_solution_demand(sol)}
 
 
 
@@ -72,7 +68,7 @@ class Grasp:
 
     def localSearch(self, solution, coverage):
         sol = Solution(solution, deepcopy(coverage))
-        print(solution)
+
         changed = True
         while changed:
             changed = False
@@ -95,5 +91,7 @@ class Grasp:
 
 
 
-g = Grasp(Nodes, 500, 5)
+g = Grasp("/data1", 500, 5, 1)
 
+print(g.bestSolution)
+print(g.parser.totalDemand)

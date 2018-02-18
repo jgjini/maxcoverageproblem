@@ -3,14 +3,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class Parser:
-    @staticmethod
-    def get_Nodes():
+    def __init__(self, nodesFile):
+        self.nodeFile = nodesFile
+        self.totalDemand = 0
+        self.Nodes = self.get_Nodes()
+
+    def get_Nodes(self):
         points = []
         nodesbynum = {}
         nodesbypos = {}
-        adjNodes = {}
         counter = 1
-        with open("data1", "r") as file:
+        with open("/Users/Jurgen/PycharmProjects/maxcoverageproblem/data/nodesfile" + self.nodeFile) as file:
             for line in file:
                 p = line.split(" ")
                 nodesbypos[(int(p[0]),int(p[1]))] = counter
@@ -70,15 +73,16 @@ class Parser:
 
 
         counter = 1
-        with open("data1") as file2:
+        with open("/Users/Jurgen/PycharmProjects/maxcoverageproblem/data/demandfiles" + self.nodeFile) as file2:
             total = 0
             for line in file2:
                 finalNodes[counter]["d"] = int(line.split()[0])
                 total += int(line.split()[0])
-                counter +=1
-        print(total)
+                counter += 1
+
+        self.totalDemand = total
+
         return finalNodes
 
 
-p = Parser.get_Nodes()
 
